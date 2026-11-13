@@ -1,41 +1,38 @@
 package com.example.demo.config.response;
 
-import com.example.demo.config.exception.CustomException;
+import org.springframework.http.ResponseEntity;
+
+import com.example.demo.config.exception.ErrorCode;
 
 import lombok.Getter;
 
 @Getter 
-public class ResponseDto<T> {
-    private Integer status;
+public class ResponseDto<T>{
+    private boolean success;
     private String code;
     private String message; 
     private final T data;
 
-
-    public ResponseDto(){
-        this.status = 200;
-        this.code = "ok";
-        this.message = "ok";
-        this.data = null;
-    }
-    public ResponseDto(T data){
-        this.status = 200;
-        this.code = "ok";
-        this.message = "ok";
-        this.data = data;
-    }
-
-    public ResponseDto(Integer status, String code, String message, T data){
-        this.status = status;
+    private ResponseDto(boolean success, String code, String message, T data){
+        this.success = success;
         this.code = code;
         this.message = message;
         this.data = data;
     }
 
-    public ResponseDto(CustomException e){
-        this.status = e.getStatus();
-        this.code = e.getCode();
-        this.message = e.getMessage();
-        this.data = null;
+    public static <T>  ResponseEntity<ResponseDto<T>> ok(T data){
+        return ResponseEntity.ok(new ResponseDto<>(true, "ok","ok",data));
+    }
+
+    public static ResponseEntity<ResponseDto<Void>> fail(ErrorCode errorCode) {
+        return new ResponseEntity<>(
+            new ResponseDto<>(false, errorCode.getCode(), errorCode.getMessage(), null),
+            errorCode.getStatus());
+    }
+
+    public static ResponseEntity<ResponseDto<Void>> fail(ErrorCode errorCode, String message) {
+        return new ResponseEntity<>(
+            new ResponseDto<>(false, errorCode.getCode(), message, null),
+            errorCode.getStatus());
     }
 }

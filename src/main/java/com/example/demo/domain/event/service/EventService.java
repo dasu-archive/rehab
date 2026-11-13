@@ -3,6 +3,8 @@ package com.example.demo.domain.event.service;
 
 import org.springframework.stereotype.Service;
 
+import com.example.demo.config.exception.CustomException;
+import com.example.demo.config.exception.ErrorCode;
 import com.example.demo.domain.event.dto.request.RequestAddEventDto;
 import com.example.demo.domain.event.dto.request.RequestRegistrationEventDto;
 import com.example.demo.domain.event.dto.response.EventDto;
@@ -28,7 +30,7 @@ public class EventService {
 
     
     public EventDto getEvent(Long id){
-        Event event = eventRepository.findById(id).orElseThrow();
+        Event event = eventRepository.findById(id).orElseThrow(()->new CustomException(ErrorCode.DATA_NOT_FOUND));
         return event.toEventDto();
     }
 
@@ -39,12 +41,8 @@ public class EventService {
     @Transactional 
     public boolean addEvent(RequestAddEventDto dto){
         
-        try{
-            eventRepository.save(new Event(dto.getEventName(), dto.getCapacity()));
-        }
-        catch(Exception e){
+        eventRepository.save(new Event(dto.getEventName(), dto.getCapacity()));
 
-        }
         return true;
     }
 

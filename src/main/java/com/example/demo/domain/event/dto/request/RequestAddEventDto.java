@@ -7,7 +7,6 @@ public class RequestAddEventDto {
 
     
     String eventName;
-
     Integer capacity;
     
 }

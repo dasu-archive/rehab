@@ -2,6 +2,7 @@ package com.example.demo.domain.event.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,33 +20,33 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor 
-@RequestMapping("/v1/event")
+@RequestMapping("/v1/events")
 public class EventController {
     
     private final EventService eventService;
 
-    @PostMapping("/add")
-    public ResponseDto addEvent(@RequestBody RequestAddEventDto dto){
+    @PostMapping()
+    public ResponseEntity<ResponseDto<Void>> addEvent(@RequestBody RequestAddEventDto dto){
         eventService.addEvent(dto);
 
-        return new ResponseDto();
+        return ResponseDto.ok(null);
     }
 
     @GetMapping("/search")
-    public ResponseDto searchEvent(@RequestParam (value = "q") String q){
+    public ResponseEntity<ResponseDto<Void>> searchEvent(@RequestParam (value = "q") String q){
         eventService.searchEvent(q);
 
-        return new ResponseDto();
+        return ResponseDto.ok(null);
     }
 
     @GetMapping("/{id}")
-    public ResponseDto getEvent(@RequestParam (value="id") Long id){
+    public ResponseEntity<ResponseDto<EventDto>> getEvent(@PathVariable  (value="id") Long id){
         EventDto eventDto = eventService.getEvent(id);
-        return new ResponseDto(eventDto);
+        return ResponseDto.ok(eventDto);
     }
 
     @PostMapping("/regist")
-    public ResponseDto registrationEvent(@RequestBody RequestRegistrationEventDto dto){
-        return new ResponseDto();
+    public ResponseEntity<ResponseDto<Void>> registrationEvent(@RequestBody RequestRegistrationEventDto dto){
+        return ResponseDto.ok(null);
     }
 }
