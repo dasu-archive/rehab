@@ -47,6 +47,7 @@ public class EventController {
 
     @PostMapping("/regist")
     public ResponseEntity<ResponseDto<Void>> registrationEvent(@RequestBody RequestRegistrationEventDto dto){
+        eventService.registrationEvent(dto);
         return ResponseDto.ok(null);
     }
 }

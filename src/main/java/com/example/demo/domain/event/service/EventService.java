@@ -48,28 +48,24 @@ public class EventService {
 
     
     @Transactional 
-    public boolean registrationEvent(RequestRegistrationEventDto dto, Long userId){
+    public boolean registrationEvent(RequestRegistrationEventDto dto){
 
-        try{
 
-            // 정원초과 확인
+
             
-            // 찾기
-            Event event = eventRepository.findById(dto.getEventId()).orElseThrow();
-            Member member = memberRepository.findById(userId).orElseThrow();
+        // 찾기
+        Event event = eventRepository.findById(dto.getEventId()).orElseThrow();
+        Member member = memberRepository.findByName(dto.getUsername()).orElseThrow();
 
-            // 정원초과 확인
-            if(event.getApplicantCount() >= event.getCapacity()) throw new Exception();
-            // 중복 신청 확인
-            Applicant applicant = applicantRepository.findByMemberAndEvent(member,event).orElse(new Applicant(member,event));
-            
-            // 등록
-            applicantRepository.save(applicant);
+        // 정원초과 확인
+        if(event.getApplicantCount() >= event.getCapacity()) throw new CustomException(ErrorCode.DATA_INTEGRITY_VIOLATION);
+        // 중복 신청 확인
+        if(!applicantRepository.findByMemberAndEvent(member,event).isEmpty()) throw new CustomException(ErrorCode.INVALID_INPUT);
+        
+        // 등록
+        applicantRepository.save(new Applicant(member, event));
+        event.addApplicantCount();
 
-
-        }catch(Exception e){
-
-        }
         return true;
     }
 }

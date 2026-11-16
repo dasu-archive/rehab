@@ -52,4 +52,8 @@ public class Event {
         return new EventDto(this.name, this.id);
     }
 
+    public void addApplicantCount() {
+        this.applicantCount++;
+    }
+
 }
