@@ -1,6 +1,11 @@
 package com.example.demo.domain.event.service;
 
 
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.config.exception.CustomException;
@@ -34,8 +39,10 @@ public class EventService {
         return event.toEventDto();
     }
 
-    public void searchEvent(String q){
-        // eventRepository.findByName(q);
+    public Page<EventDto> searchEvent(String q, Pageable pageable){
+        Page<Event> eventList = eventRepository.findByNameContaining(q, pageable);
+
+        return new PageImpl<>(eventList.get().map(e -> new EventDto(e.getName(), e.getId())).toList(), pageable, eventList.getTotalElements());
     }
 
     @Transactional 

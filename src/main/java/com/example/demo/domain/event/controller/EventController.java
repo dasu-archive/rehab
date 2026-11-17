@@ -1,5 +1,9 @@
 package com.example.demo.domain.event.controller;
 
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,10 +37,10 @@ public class EventController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<ResponseDto<Void>> searchEvent(@RequestParam (value = "q") String q){
-        eventService.searchEvent(q);
+    public ResponseEntity<ResponseDto<Page<EventDto>>> searchEvent(@RequestParam (value = "q") String q, Pageable page){
+        Page<EventDto> eventDtoList = eventService.searchEvent(q, page);
 
-        return ResponseDto.ok(null);
+        return ResponseDto.ok(eventDtoList);
     }
 
     @GetMapping("/{id}")

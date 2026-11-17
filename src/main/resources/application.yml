@@ -13,7 +13,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: ${DB_DDL_AUTO}
     defer-datasource-initialization: true
     show-sql: true
     properties:
@@ -21,4 +21,4 @@ spring:
         format_sql: true
   sql:
     init:
-      mode: always
+      mode: ${DB_SQL_INIT_MODE}
