@@ -20,7 +20,8 @@ public enum ErrorCode {
     METHOD_NOT_ALLOW(HttpStatus.METHOD_NOT_ALLOWED, "C002", "지원하지 않는 HTTP 메서드 입니다."),
 
     // 409
-    DUPLICATE_EMAIL(HttpStatus.CONFLICT, "M002", "이미 사용중인 이메일입니다"),
+    DUPLICATE_EMAIL(HttpStatus.CONFLICT, "M002", "이미 사용중인 이메일입니다"), 
+    CAPACITY_EXCEEDED(HttpStatus.CONFLICT, "E001", "정원이 초과되었습니다."),
     DATA_INTEGRITY_VIOLATION(HttpStatus.CONFLICT, "C003", "데이터 조건을 위배했습니다."),
 
     // 500

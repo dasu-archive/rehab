@@ -1,8 +1,6 @@
 package com.example.demo.domain.event.service;
 
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -48,7 +46,7 @@ public class EventService {
     @Transactional 
     public boolean addEvent(RequestAddEventDto dto){
         
-        eventRepository.save(new Event(dto.getEventName(), dto.getCapacity()));
+        eventRepository.save(new Event(dto.eventName(), dto.capacity()));
 
         return true;
     }
@@ -61,11 +59,11 @@ public class EventService {
 
             
         // 찾기
-        Event event = eventRepository.findById(dto.getEventId()).orElseThrow();
-        Member member = memberRepository.findByName(dto.getUsername()).orElseThrow();
+        Event event = eventRepository.findById(dto.eventId()).orElseThrow();
+        Member member = memberRepository.findByName(dto.username()).orElseThrow();
 
         // 정원초과 확인
-        if(event.getApplicantCount() >= event.getCapacity()) throw new CustomException(ErrorCode.DATA_INTEGRITY_VIOLATION);
+        if(event.getApplicantCount() >= event.getCapacity()) throw new CustomException(ErrorCode.CAPACITY_EXCEEDED);
         // 중복 신청 확인
         if(!applicantRepository.findByMemberAndEvent(member,event).isEmpty()) throw new CustomException(ErrorCode.INVALID_INPUT);
         

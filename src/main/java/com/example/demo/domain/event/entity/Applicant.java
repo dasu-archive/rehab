@@ -9,10 +9,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity(name="applicant")
+@Entity
+@Table(name="applicant")
 @Getter 
 @NoArgsConstructor 
 public class Applicant {

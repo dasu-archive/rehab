@@ -1,12 +1,10 @@
 package com.example.demo.domain.event.dto.request;
 
-import lombok.Getter;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 
-@Getter 
-public class RequestAddEventDto {
-
-    
-    String eventName;
-    Integer capacity;
-    
-}
+public record RequestAddEventDto(    
+    @NotBlank String eventName,
+    @Min(1) Integer capacity
+) {
+} 

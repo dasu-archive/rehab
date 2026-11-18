@@ -2,17 +2,10 @@ package com.example.demo.domain.event.dto.request;
 
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.Getter;
-
-@Getter 
-public class RequestRegistrationEventDto {
+ 
+public record RequestRegistrationEventDto(
     
-    @NotBlank 
-    Long eventId;
+    @NotBlank Long eventId,
+    @NotBlank String username
+){}
 
-    @NotBlank 
-    String username;
-
-
-
-}
