@@ -37,8 +37,8 @@ public class EventService {
         return event.toEventDto();
     }
 
-    public Page<EventDto> searchEvent(String q, Pageable pageable){
-        Page<Event> eventList = eventRepository.findByNameContaining(q, pageable);
+    public Page<EventDto> searchEvent(String q, Boolean remain, Pageable pageable){
+        Page<Event> eventList = eventRepository.search(q, remain, pageable);
 
         return new PageImpl<>(eventList.get().map(e -> new EventDto(e.getName(), e.getId())).toList(), pageable, eventList.getTotalElements());
     }

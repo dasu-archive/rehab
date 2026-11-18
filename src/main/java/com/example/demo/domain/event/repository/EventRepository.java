@@ -15,7 +15,7 @@ import com.example.demo.domain.event.entity.Event;
  * EventRepository
  */
 @Repository 
-public interface EventRepository extends JpaRepository<Event,Long>{
+public interface EventRepository extends JpaRepository<Event,Long>, EventRepositoryCustom{
 
 
     Page<Event> findByNameContaining(String q, Pageable pageable);

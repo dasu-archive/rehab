@@ -17,6 +17,8 @@ import com.example.demo.domain.event.dto.request.RequestRegistrationEventDto;
 import com.example.demo.domain.event.dto.response.EventDto;
 import com.example.demo.domain.event.service.EventService;
 
+import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 
 
@@ -35,8 +37,11 @@ public class EventController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<ResponseDto<Page<EventDto>>> searchEvent(@RequestParam (value = "q") String q, Pageable page){
-        Page<EventDto> eventDtoList = eventService.searchEvent(q, page);
+    public ResponseEntity<ResponseDto<Page<EventDto>>> searchEvent(
+        @Nullable @RequestParam (value = "q") String q,
+        @Nullable  @RequestParam (value="remain") Boolean remain, 
+        @NotNull Pageable page){
+        Page<EventDto> eventDtoList = eventService.searchEvent(q, remain, page);
 
         return ResponseDto.ok(eventDtoList);
     }
