@@ -30,7 +30,7 @@ public class EventRepositoryCustomImpl implements EventRepositoryCustom{
     public Page<Event> search(String q, Boolean remain, Pageable pageable) {
         
         BooleanExpression nameQuery = q != null && StringUtils.hasText(q) ? event.name.contains(q) : null;
-        BooleanExpression remainQuery = remain == null ? null : event.capacity.gt(event.applicantCount);
+        BooleanExpression remainQuery = remain == null ? null : remain ? event.capacity.gt(event.applicantCount) : event.capacity.loe(event.applicantCount);
         
         List<OrderSpecifier<?>> orders = new ArrayList<>();
 
@@ -50,6 +50,8 @@ public class EventRepositoryCustomImpl implements EventRepositoryCustom{
                 .selectFrom(event)
                 .where(nameQuery,remainQuery)
                 .orderBy(orders.toArray(OrderSpecifier[]::new))
+                .limit(pageable.getPageSize())
+                .offset(pageable.getOffset())
                 .fetch();
 
         
