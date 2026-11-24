@@ -19,14 +19,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.example.demo.config.exception.CustomException;
-import com.example.demo.domain.event.dto.request.RequestRegistrationEventDto;
-import com.example.demo.domain.event.entity.Event;
-import com.example.demo.domain.event.repository.ApplicantRepository;
-import com.example.demo.domain.event.repository.EventRepository;
-import com.example.demo.domain.event.service.EventService;
-import com.example.demo.domain.member.entity.Member;
-import com.example.demo.domain.member.repository.MemberRepository;
+import com.example.demo.event.dto.request.RequestRegistrationEventDto;
+import com.example.demo.event.entity.Event;
+import com.example.demo.event.repository.ApplicantRepository;
+import com.example.demo.event.repository.EventRepository;
+import com.example.demo.event.service.EventService;
+import com.example.demo.global.config.exception.CustomException;
+import com.example.demo.member.entity.Member;
+import com.example.demo.member.repository.MemberRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
